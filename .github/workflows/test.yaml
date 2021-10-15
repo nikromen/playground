@@ -21,7 +21,6 @@ jobs:
 
   build:
     needs: changed_files
-    if: contains(needs.changed_files.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
     
     name: Test changed-files
     runs-on: ubuntu-latest
@@ -35,6 +34,7 @@ jobs:
           - var1: dir-3/
             var2: var2c
     
+    if: contains(needs.changed_files.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
     steps:
       - uses: actions/checkout@v2
 
