@@ -1,0 +1,38 @@
+name: changed files
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - dir-1/
+      - dir-2/
+      - dir-3/
+
+jobs:
+  build:
+    name: Test changed-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - var1: dir-1/
+            var2: var2a
+          - var1: dir-2/
+            var2: var2b
+          - var1: dir-3/
+            var2: var2c
+    
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v10
+    
+      if: contains(steps.changed-files.outputs.all_changed_and_modified_files}, matrix.var1)
+      - name: List all modified files
+        run: |
+            echo "change"
