@@ -32,7 +32,8 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v10
     
-      if: contains(steps.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
-      - name: List all modified files
+      - name: List all added files in dir1
         run: |
-            echo "change"
+          for file in ${{ steps.changed-files-for-dir1.outputs.added_files }}; do
+            echo "$file was added"
+          done
