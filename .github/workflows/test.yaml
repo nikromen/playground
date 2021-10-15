@@ -34,8 +34,8 @@ jobs:
           - var1: dir-3/
             var2: var2c
     
-    if: contains(needs.changed_files.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
     steps:
+      if: contains(needs.changed_files.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
       - uses: actions/checkout@v2
 
       - name: if changed in specific dir
