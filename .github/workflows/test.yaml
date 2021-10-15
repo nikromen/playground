@@ -11,9 +11,9 @@ on:
 
 jobs:
   changed_files:
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v10
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v10
 
   build:
     if: contains(steps.changed-files.outputs.all_changed_and_modified_files, matrix.var1)
@@ -32,10 +32,6 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v10
 
       - name: if changed in specific dir
         run: |
