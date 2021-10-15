@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - dir-1/**
+      - dir-2/**
+      - dir-3/**
 
 jobs:
   build:
@@ -30,6 +34,6 @@ jobs:
     
       - name: List all added files in dir1
         run: |
-          for file in ${{ steps.changed-files-for-dir1.outputs.added_files }}; do
+          for file in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
             echo "$file was added"
           done
