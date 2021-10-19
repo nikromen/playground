@@ -40,6 +40,10 @@ jobs:
             echo "$file was added for ${{ matrix.var1 }}"
           done
 
+      - name: print github_env
+        run: |
+          echo "$GITHUB_ENV"
+
       - name: just another run
         if: contains(env.CHANGED_FILES, matrix.var1)
         run: |
