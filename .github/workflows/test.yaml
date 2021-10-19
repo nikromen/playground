@@ -30,21 +30,20 @@ jobs:
 
       # https://github.community/t/can-i-process-only-changed-files-with-github-actions/137814
       - name: Get changed files
+        shell: bash
         run: |
-          echo "CHANGED_FILES=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
+          changed_files=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})
+          echo "::set-output name=changed_files::${changed_files}"
+        id: changed_files
 
       - name: print relevant changed files
-        if: contains(env.CHANGED_FILES, matrix.var1)
+        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
         run: |
-          for file in ${{ env.CHANGED_FILES }}; do
+          for file in ${{ env.changed_files }}; do
             echo "$file was added for ${{ matrix.var1 }}"
           done
 
-      - name: print github_env
-        run: |
-          echo "$GITHUB_ENV"
-
       - name: just another run
-        if: contains(env.CHANGED_FILES, matrix.var1)
+        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
         run: |
           echo "heyyyyy"
