@@ -36,6 +36,10 @@ jobs:
           echo "::set-output name=changed_files::${changed_files}"
         id: changed_files
 
+      - name: echo
+        - run: |
+          echo "$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
+
       - name: print relevant changed files
         if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
         run: |
