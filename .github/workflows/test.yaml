@@ -37,7 +37,7 @@ jobs:
         id: changed_files
 
       - name: echo
-        - run: |
+        run: |
           echo "$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
 
       - name: print relevant changed files
