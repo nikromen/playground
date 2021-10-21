@@ -33,21 +33,20 @@ jobs:
         shell: bash
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})
-          echo "::set-output name=changed_files::${changed_files}"
-        id: changed_files
+          echo "::set-env name=changed_files::${changed_files}"
 
       - name: echo
         run: |
           echo "$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
 
       - name: print relevant changed files
-        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
+        if: contains(env.changed_files, matrix.var1)
         run: |
           for file in ${{ env.changed_files }}; do
             echo "$file was added for ${{ matrix.var1 }}"
           done
 
       - name: just another run
-        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
+        if: contains(env.changed_files, matrix.var1)
         run: |
           echo "heyyyyy"
