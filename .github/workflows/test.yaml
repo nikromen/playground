@@ -16,11 +16,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - var1: dir-1/
+          - var1: r-1/
             var2: var2a
-          - var1: dir-2/
+          - var1: r-2/
             var2: var2b
-          - var1: dir-3/
+          - var1: r-3/
             var2: var2c
     
     steps:
@@ -41,13 +41,13 @@ jobs:
           echo "$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
 
       - name: print relevant changed files
-        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
+        if: contains(steps.changed_files.outputs.changed_files, di${{ matrix.var1 }})
         run: |
           for file in ${{ steps.changed_files.outputs.changed_files }}; do
             echo "$file was added for ${{ matrix.var1 }}"
           done
 
       - name: just another run
-        if: contains(steps.changed_files.outputs.changed_files, matrix.var1)
+        if: contains(steps.changed_files.outputs.changed_files, di${{ matrix.var1 }})
         run: |
           echo "heyyyyy"
