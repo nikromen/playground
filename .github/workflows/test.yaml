@@ -22,6 +22,9 @@ jobs:
             var2: var2b
           - var1: r-3/
             var2: var2c
+
+    env:
+      path: di${{ matrix.var1 }}
     
     steps:
       - uses: actions/checkout@v2
@@ -41,13 +44,13 @@ jobs:
           echo "$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }})"
 
       - name: print relevant changed files
-        if: contains(steps.changed_files.outputs.changed_files, di${{ matrix.var1 }})
+        if: contains(steps.changed_files.outputs.changed_files, env.path)
         run: |
           for file in ${{ steps.changed_files.outputs.changed_files }}; do
             echo "$file was added for ${{ matrix.var1 }}"
           done
 
       - name: just another run
-        if: contains(steps.changed_files.outputs.changed_files, di${{ matrix.var1 }})
+        if: contains(steps.changed_files.outputs.changed_files, env.path)
         run: |
           echo "heyyyyy"
